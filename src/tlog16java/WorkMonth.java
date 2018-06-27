@@ -65,4 +65,10 @@ public class WorkMonth {
             }
     }
     
+    public void addWorkDay(WorkDay wd){
+        if ( isNewDate(wd)==true && isSameMonth(wd)==true && wd.isWeekDay() ){
+            days.add(wd);
+        }
+    }
+    
 }
