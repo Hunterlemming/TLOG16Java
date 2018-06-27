@@ -8,7 +8,7 @@ public class TimeLogger {
     
     private List<WorkMonth> months;
         
-//---- User Methods ----       
+//---- Constructor ----
     
     public List<WorkMonth> getMonths() {
         return months;

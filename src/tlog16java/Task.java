@@ -12,7 +12,7 @@ public class Task {
     private String comment;
     private long minPerTask;
     
-//---- Constructors, Getters ----
+//---- Constructors, Getters, Setters ----
     
     public Task(String _taskId, String _comment, int startHour, int startMin, int endHour, int endMin){
         taskId=_taskId;
@@ -54,6 +54,34 @@ public class Task {
     
     public long getMinPerTask() {
         return minPerTask;
+    }
+    
+    public void setTaskId(String taskId) {
+        this.taskId = taskId;
+    }
+    
+    public void setStartTime(int startHour, int startMin) {
+        this.startTime = LocalTime.of(startHour, startMin);
+        makeMinPerTask();
+    }
+    
+    public void setStartTime(String _startTime){
+        this.startTime=LocalTime.of( Integer.parseInt(_startTime.split(":")[0]) , Integer.parseInt(_startTime.split(":")[1]) );
+        makeMinPerTask();
+    }
+    
+    public void setEndTime(int endHour, int endMin) {
+        this.endTime = LocalTime.of(endHour, endMin);
+        makeMinPerTask();
+    }
+    
+    public void setEndTime(String _endTime) {
+        this.endTime = LocalTime.of( Integer.parseInt(_endTime.split(":")[0]) , Integer.parseInt(_endTime.split(":")[1]) );
+        makeMinPerTask();
+    }
+    
+    public void setComment(String comment) {
+        this.comment = comment;
     }
     
 //---- User Methods ----       

@@ -12,7 +12,7 @@ public class WorkMonth {
     private long sumPerMonth;
     private long requiredMinPerMonth;
         
-//---- Constructors, Getters ----
+//---- Constructor, Getters ----
     
     public WorkMonth(int _year, int _month){
         date=YearMonth.of(_year,_month);
