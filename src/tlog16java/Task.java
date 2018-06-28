@@ -10,7 +10,7 @@ public class Task {
     private LocalTime startTime;
     private LocalTime endTime;
     private String comment;
-    private long minPerTask;
+    private long minPerTask=0;
     
 //---- Constructors, Getters, Setters ----
     
@@ -34,6 +34,10 @@ public class Task {
         endTime=LocalTime.of( Integer.parseInt(_endTime.split(":")[0]) , Integer.parseInt(_endTime.split(":")[1]) );
         comment=_comment;
         makeMinPerTask();
+    }
+    
+    public Task(String _taskId){
+        taskId=_taskId;
     }
     
     public String getTaskId() {
@@ -88,18 +92,18 @@ public class Task {
     
     public boolean isValidTaskId(){
         boolean theIdIsValid=false;
-        if ( taskId.length()== 4 || startsWithLT()==true ){
+        if ( isValidRedmineTaskId() || isValidLTTaskId()==true ){
             theIdIsValid=true;
         }
         return theIdIsValid;
     }
     
-        private boolean startsWithLT(){
-            if( taskId.length()==7 && taskId.split("-")[0].equals("LT") ){
-                return true;
-            } else {
-                return false;
-            }
+        private boolean isValidLTTaskId(){
+            return taskId.length()==7 && taskId.split("-")[0].equals("LT");
+        }
+        
+        private boolean isValidRedmineTaskId(){
+            return taskId.length() == 4;
         }
         
     public boolean isMultipleQuarterHour(){
