@@ -41,6 +41,18 @@ public class WorkDay {
     public long getSumPerDay() {
         return sumPerDay;
     }
+    
+    public void setRequiredMinPerDay(long requiredMinPerDay) {
+        this.requiredMinPerDay = requiredMinPerDay;
+    }
+    
+    public void setActualDay(int _year, int _month, int _day) {
+        this.actualDay = LocalDate.of(_year, _month, _day);
+    }
+    
+    public List<Task> getTasks() {
+        return tasks;
+    }
         
 //---- User Methods ----       
     
@@ -50,8 +62,8 @@ public class WorkDay {
     
     public boolean isSeparatedTime(Task t){
         boolean isSeparated=true;
-        for (int i=0; i<tasks.size(); i++){
-            if ( isInTheIntervall(t,tasks.get(i))==true ){
+        for (int i=0; i<getTasks().size(); i++){
+            if ( isInTheIntervall(t,getTasks().get(i))==true ){
                 isSeparated=false;
             }
         }
@@ -66,7 +78,7 @@ public class WorkDay {
         
     public void addTask(Task t){
         if( t.isMultipleQuarterHour() && isSeparatedTime(t) ){
-            tasks.add(t);
+            getTasks().add(t);
         }
     }
     
