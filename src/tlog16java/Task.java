@@ -105,9 +105,5 @@ public class Task {
         private boolean isValidRedmineTaskId(){
             return taskId.length() == 4;
         }
-        
-    public boolean isMultipleQuarterHour(){
-        return (minPerTask % 15) == 0;
-    }
     
 }

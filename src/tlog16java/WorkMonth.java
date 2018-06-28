@@ -60,13 +60,13 @@ public class WorkMonth {
     
     public void addWorkDay(WorkDay wd, boolean isWeekendEnabled){
         if ( isNewDate(wd)==true && isSameMonth(wd)==true )
-            if ( isWeekendEnabled==true || ( wd.isWeekDay() && isWeekendEnabled==false ) ){
+            if ( isWeekendEnabled==true || ( Util.isWeekDay(wd) && isWeekendEnabled==false ) ){
                 days.add(wd);
             }
     }
     
     public void addWorkDay(WorkDay wd){
-        if ( isNewDate(wd)==true && isSameMonth(wd)==true && wd.isWeekDay() ){
+        if ( isNewDate(wd)==true && isSameMonth(wd)==true && Util.isWeekDay(wd) ){
             days.add(wd);
         }
     }

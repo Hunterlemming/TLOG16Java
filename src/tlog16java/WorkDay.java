@@ -59,31 +59,11 @@ public class WorkDay {
     public long getExtraMinPerDay(){
         return sumPerDay-requiredMinPerDay;
     }
-    
-    public boolean isSeparatedTime(Task t){
-        boolean isSeparated=true;
-        for (int i=0; i<getTasks().size(); i++){
-            if ( isInTheIntervall(t,getTasks().get(i))==true ){
-                isSeparated=false;
-            }
-        }
-        return isSeparated;
-    }
-    
-        private boolean isInTheIntervall(Task newTask, Task oldTask){
-            return ( ( newTask.getStartTime().compareTo(oldTask.getStartTime())<=0 && oldTask.getEndTime().compareTo(newTask.getEndTime())<=0 ) ||
-                     ( oldTask.getStartTime().compareTo(newTask.getEndTime())<0 && newTask.getEndTime().compareTo(oldTask.getEndTime())<=0 ) ||
-                     ( oldTask.getStartTime().compareTo(newTask.getStartTime())<=0 && newTask.getStartTime().compareTo(oldTask.getEndTime())<0 ) );
-        }
         
     public void addTask(Task t){
-        if( t.isMultipleQuarterHour() && isSeparatedTime(t) ){
+        if( Util.isMultipleQuarterHour(t.getMinPerTask()) && Util.isSeparatedTime(this,t) ){
             getTasks().add(t);
         }
-    }
-    
-    public boolean isWeekDay(){
-        return actualDay.getDayOfWeek().getValue()<=5;
     }
     
 }
