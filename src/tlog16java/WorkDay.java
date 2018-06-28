@@ -12,7 +12,7 @@ public class WorkDay {
     private LocalDate actualDay=LocalDate.now();
     private long sumPerDay;
         
-//---- Constructors, Getters ----
+//---- Constructors, Getters, Setters ----
     
     public WorkDay(long _requiredMinPerDay, int _actualYear, int _actualMonth, int _actualDay){
         requiredMinPerDay=_requiredMinPerDay;
