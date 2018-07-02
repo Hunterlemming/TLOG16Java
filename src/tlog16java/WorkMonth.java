@@ -2,12 +2,14 @@ package tlog16java;
 
 import java.util.List;
 import java.time.YearMonth;
+import java.util.ArrayList;
+
 
 public class WorkMonth {
             
 //---- Variables ----
     
-    private List<WorkDay> days;
+    private List<WorkDay> days = new ArrayList<>();
     private YearMonth date;
     private long sumPerMonth;
     private long requiredMinPerMonth;

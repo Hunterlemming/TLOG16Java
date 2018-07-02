@@ -2,12 +2,13 @@ package tlog16java;
 
 import java.util.List;
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 public class WorkDay {
         
 //---- Variables ----
     
-    private List<Task>tasks;
+    private List<Task>tasks = new ArrayList<>();
     private long requiredMinPerDay=450;
     private LocalDate actualDay=LocalDate.now();
     private long sumPerDay;

@@ -1,12 +1,13 @@
 package tlog16java;
 
 import java.util.List;
+import java.util.ArrayList;
 
 public class TimeLogger {
             
 //---- Variables ----
     
-    private List<WorkMonth> months;
+    private List<WorkMonth> months = new ArrayList<>();
         
 //---- Getter ----
     
