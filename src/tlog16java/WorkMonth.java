@@ -14,7 +14,7 @@ public class WorkMonth {
     private long sumPerMonth;
     private long requiredMinPerMonth;
         
-//---- Constructor, Getters ----
+//---- Constructor, Getters, Setters ----
     
     public WorkMonth(int _year, int _month){
         date=YearMonth.of(_year,_month);
@@ -32,9 +32,22 @@ public class WorkMonth {
         return sumPerMonth;
     }
     
+        private void setSumPerMonth(){
+            for (int i=0; i<days.size(); i++){
+                sumPerMonth=sumPerMonth+days.get(i).getSumPerDay();
+            }
+        }
+    
     public long getRequiredMinPerMonth() {
+        setRequiredMinPerMonth();
         return requiredMinPerMonth;
     }
+    
+        private void setRequiredMinPerMonth(){
+            for(int i=0; i<days.size(); i++){
+                requiredMinPerMonth=requiredMinPerMonth+days.get(i).getRequiredMinPerDay();
+            }
+        }
         
 //---- User Methods ----       
     

@@ -40,8 +40,15 @@ public class WorkDay {
     }
     
     public long getSumPerDay() {
+        setSumPerDay();
         return sumPerDay;
     }
+    
+        private void setSumPerDay(){
+            for (int i=0; i<tasks.size(); i++){
+                sumPerDay=sumPerDay+tasks.get(i).getMinPerTask();
+            }
+        }
     
     public void setRequiredMinPerDay(long requiredMinPerDay) {
         this.requiredMinPerDay = requiredMinPerDay;

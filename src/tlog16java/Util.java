@@ -36,4 +36,31 @@ public class Util {
         return wd.getActualDay().getDayOfWeek().getValue()<=5;
     }
     
+    public static boolean validDate(int year, int month, int day){
+        boolean valid=false;
+        if ( 1<=day && day<32 ) {
+            if (month<8){
+                if ( month%2==0 && day<=30 ) {
+                    if (month==2){
+                        if ( year%4==0 && day<=29 ) valid=true;
+                        if ( year%4!=0 && day<=28 ) valid=true;
+                    } else {
+                        valid=true;
+                    }
+                }
+                if ( month%2==1 && day<=31) {
+                    valid=true;
+                }
+            } else {
+                if ( month%2!=0 && day<=30 ) {
+                    valid=true;
+                }
+                if ( month%2==0 && day<=31 ) {
+                    valid=true;
+                }
+            }
+        }
+        return valid;
+    }
+    
 }
