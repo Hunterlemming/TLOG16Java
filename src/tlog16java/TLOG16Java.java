@@ -5,6 +5,7 @@ package tlog16java;
 public class TLOG16Java {
 
     public static void main(String[] args) {
+        System.out.println("Laptop test row");
         TLOG16Java application = new TLOG16Java();
         application.start();
     }
