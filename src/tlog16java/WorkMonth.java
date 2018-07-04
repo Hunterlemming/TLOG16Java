@@ -74,15 +74,25 @@ public class WorkMonth {
     }
     
     public void addWorkDay(WorkDay wd, boolean isWeekendEnabled){
-        if ( isNewDate(wd)==true && isSameMonth(wd)==true )
+        if ( isNewDate(wd)==true && isSameMonth(wd)==true ){
             if ( isWeekendEnabled==true || ( Util.isWeekDay(wd) && isWeekendEnabled==false ) ){
                 days.add(wd);
+            } else {
+                if ( Util.isWeekDay(wd)==false && isWeekendEnabled==false ) System.out.println("The given workday is on a weekend!");
             }
+        } else {
+            if (isNewDate(wd)==false) System.out.println("The given workday already exists!");
+            if (isSameMonth(wd)==false) System.out.println("The given workday does not belong to the given month!");
+        }
     }
     
     public void addWorkDay(WorkDay wd){
         if ( isNewDate(wd)==true && isSameMonth(wd)==true && Util.isWeekDay(wd) ){
             days.add(wd);
+        } else {
+            if (Util.isWeekDay(wd)==false) System.out.println("The given workday is on a weekend!");
+            if (isNewDate(wd)==false) System.out.println("The given workday already exists!");
+            if (isSameMonth(wd)==false) System.out.println("The given workday does not belong to the given month!");
         }
     }
     

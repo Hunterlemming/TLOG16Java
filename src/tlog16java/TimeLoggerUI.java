@@ -70,9 +70,9 @@ public class TimeLoggerUI {
             WorkMonth invalidMonth = new WorkMonth(0,1);
             if (!workLog.getMonths().isEmpty()) {
                 int option = workLog.getMonths().size();
-                while(option>=workLog.getMonths().size()){
+                while( option>=workLog.getMonths().size() || option<0 ){
                     System.out.println("Choose a month to list workdays from!");
-                    option=userInput.nextInt()-1;
+                    option=Integer.parseInt(userInput.nextLine())-1;
                 }
             
                 WorkMonth chosenMonth = workLog.getMonths().get(option);
@@ -94,9 +94,9 @@ public class TimeLoggerUI {
             WorkMonth chosenMonth = listDaysForMonth();
             if( chosenMonth.getDate().getYear()!=0 && chosenMonth.getDate().getMonth().getValue()!=1 ){
                 int option=chosenMonth.getDays().size();
-                while(option>=chosenMonth.getDays().size()){
+                while( option>=chosenMonth.getDays().size() || option<0 ){
                     System.out.println("Choose a day to list tasks from!");
-                    option=userInput.nextInt()-1;
+                    option=Integer.parseInt(userInput.nextLine())-1;
                 }
             
                 WorkDay chosenDay = chosenMonth.getDays().get(option);
@@ -117,14 +117,14 @@ public class TimeLoggerUI {
             boolean valid=false;
             while(valid==false){
                 System.out.println("Please specify the year!");
-                year=userInput.nextInt();
+                year=Integer.parseInt(userInput.nextLine());
                 if (1900<=year) valid=true;
             }
             
             valid=false;
             while(valid==false){
                 System.out.println("Please specify the month!");
-                month=userInput.nextInt();
+                month=Integer.parseInt(userInput.nextLine());
                 if ( 1<=month && month<=12 ) valid=true;
             }
             
@@ -137,28 +137,30 @@ public class TimeLoggerUI {
             
             if (!workLog.getMonths().isEmpty()){
                 int destinationMonthID=workLog.getMonths().size();
-                while (destinationMonthID>=workLog.getMonths().size()){
+                while ( destinationMonthID>=workLog.getMonths().size() || destinationMonthID<0 ){
                     System.out.println("Choose the month you wish to add a workday to!");
-                    destinationMonthID=userInput.nextInt()-1;
+                    destinationMonthID=Integer.parseInt(userInput.nextLine())-1;
                 }
 
-                int newDay;
+                int destinationDay;
                 int destinationMonth = workLog.getMonths().get(destinationMonthID).getDate().getMonth().getValue();
                 int destinationYear = workLog.getMonths().get(destinationMonthID).getDate().getYear();
 
                 do{
                     System.out.println("Which day of the month should the workday be on?");
-                    newDay=userInput.nextInt();
-                }while(Util.validDate(destinationYear, destinationMonth, newDay)==false);
+                    destinationDay=Integer.parseInt(userInput.nextLine());
+                }while(Util.validDate(destinationYear, destinationMonth, destinationDay)==false);
 
                 System.out.println("What is the required worktime for the day (minutes) ? (write \"d\" for default (7.5 hours)");
-                userInput.skip("\n");
                 String workTime = userInput.nextLine();
-                if (workTime.equals("d")) workLog.getMonths().get(destinationMonthID).addWorkDay(new WorkDay(destinationYear,destinationMonth,newDay));
-                else {
+                WorkDay newDay;
+                if (workTime.equals("d")) {
+                    newDay = new WorkDay(destinationYear,destinationMonth,destinationDay);
+                } else {
                     long workTimeInMinutes=Long.parseLong(workTime);
-                    workLog.getMonths().get(destinationMonthID).addWorkDay(new WorkDay(workTimeInMinutes,destinationYear,destinationMonth,newDay));
+                    newDay = new WorkDay(workTimeInMinutes,destinationYear,destinationMonth,destinationDay);
                 }
+                workLog.getMonths().get(destinationMonthID).addWorkDay(newDay);
             }
         }
     
