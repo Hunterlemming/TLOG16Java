@@ -36,6 +36,13 @@ public class Task {
         makeMinPerTask();
     }
     
+    public Task(String _taskId, String _comment, String _startTime){
+        taskId=_taskId;
+        startTime=LocalTime.of( Integer.parseInt(_startTime.split(":")[0]) , Integer.parseInt(_startTime.split(":")[1]) );
+        comment=_comment;
+        endTime=startTime;
+    }
+    
     public Task(String _taskId){
         taskId=_taskId;
     }
