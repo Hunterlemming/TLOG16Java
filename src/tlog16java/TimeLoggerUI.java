@@ -2,7 +2,6 @@ package tlog16java;
 
 import java.util.Scanner;
 import java.time.LocalTime;
-import java.util.List;
 
 public class TimeLoggerUI {
     
@@ -20,6 +19,7 @@ public class TimeLoggerUI {
         System.out.println("4. Add a new workmonth");
         System.out.println("5. Add a workday to a specific month");
         System.out.println("6. Add a task to a specific day");
+        System.out.println("7. Finish a specific task");
         System.out.println("-----------------------------------------------");
     }
     
@@ -35,7 +35,7 @@ public class TimeLoggerUI {
                 listDaysForMonth();
                 break;
             case 3:
-                listTasksForDay();
+                listTasksForDay(true);
                 break;
             case 4:
                 addMonth();
@@ -45,6 +45,9 @@ public class TimeLoggerUI {
                 break;
             case 6:
                 addTaskToDay();
+                break;
+            case 7:
+                finishTask();
                 break;
             case 99:
                 test();
@@ -117,21 +120,34 @@ public class TimeLoggerUI {
                 return option;
             }
         
-        private void listTasksForDay(){
+        private WorkDay listTasksForDay(boolean all){
             WorkMonth chosenMonth = listDaysForMonth();
+            WorkDay invalidDay = new WorkDay(-1);
             if( chosenMonth.getDate().getYear()!=0 && chosenMonth.getDate().getMonth().getValue()!=1 ){
                 System.out.println("Choose a day to list tasks from!");
                 WorkDay chosenDay = chosenMonth.getDays().get(getListElement(chosenMonth.getDays().size()));
                 
                 if( chosenDay.getTasks().isEmpty()){
                     System.out.println("No tasks added yet.");
+                    return invalidDay;
                 } else {
-                    for (int i=0; i<chosenDay.getTasks().size(); i++){
-                        System.out.println("TaskId: " + chosenDay.getTasks().get(i).getTaskId() + ", Comment: " + chosenDay.getTasks().get(i).getComment());
-                        System.out.println("StartTime: " + chosenDay.getTasks().get(i).getStartTime() + ", EndTime: " + chosenDay.getTasks().get(i).getEndTime() +"\n");
+                    if (all==true){
+                        for (int i=0; i<chosenDay.getTasks().size(); i++){
+                            System.out.println("TaskId: " + chosenDay.getTasks().get(i).getTaskId() + ", Comment: " + chosenDay.getTasks().get(i).getComment());
+                            System.out.println("StartTime: " + chosenDay.getTasks().get(i).getStartTime() + ", EndTime: " + chosenDay.getTasks().get(i).getEndTime() +"\n");
+                        }
+                    } else {
+                        for (int i=0; i<chosenDay.getTasks().size(); i++){
+                            if (chosenDay.getTasks().get(i).getStartTime()==chosenDay.getTasks().get(i).getEndTime()){
+                                System.out.println("TaskId: " + chosenDay.getTasks().get(i).getTaskId() + ", Comment: " + chosenDay.getTasks().get(i).getComment());
+                                System.out.println("StartTime: " + chosenDay.getTasks().get(i).getStartTime() + ", EndTime: " + chosenDay.getTasks().get(i).getEndTime() +"\n");
+                            }
+                        }
                     }
+                    return chosenDay;
                 }
             }
+            return invalidDay;
         }
         
         private void addMonth(){
@@ -197,7 +213,7 @@ public class TimeLoggerUI {
                     WorkDay destinationDay = destinationMonth.getDays().get(destinationDayID);
                 
                     Task newTask;
-                    System.out.println("Please enter the taskID!");
+                    System.out.println("Please enter the taskId!");
                     String newTaskId=userInput.nextLine();
                     System.out.println("Please enter your comment to the task!");
                     String newComment=userInput.nextLine();
@@ -236,6 +252,31 @@ public class TimeLoggerUI {
                 }
                 
                 return  lastTime;
+            }
+        
+        private void finishTask(){
+            WorkDay wd = listTasksForDay(false);
+            
+            System.out.println("Enter the taskId of the task you wish to end!");
+            String targetId = userInput.nextLine();
+            
+            for(int i=0; i<wd.getTasks().size(); i++){
+                if (targetId.equals(wd.getTasks().get(i).getTaskId())){
+                    System.out.println("Please enter the end of the task (hh:mm)!");
+                    String endTime = userInput.nextLine();
+                    while(!validTaskTime(endTime)){
+                        System.out.println("Please enter a valid time field (hh:mm)!");
+                        endTime = userInput.nextLine();
+                    }
+                    wd.getTasks().get(i).setEndTime(endTime);
+                }
+            }
+        }
+        
+            private boolean validTaskTime( String time ){
+                int hour = Integer.parseInt(time.split(":")[0]), 
+                    min = Integer.parseInt(time.split(":")[1]);
+                return ( 0<=hour && hour<=24 ) && ( 0<=min && min<=59 );
             }
     
 }
