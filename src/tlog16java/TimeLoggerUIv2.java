@@ -20,6 +20,7 @@ public class TimeLoggerUIv2 {
         System.out.println("6. Add a task to a specific day");
         System.out.println("7. Finish a specific task");
         System.out.println("8. Delete a specific task");
+        System.out.println("9. Modify a specific task");
         System.out.println("-----------------------------------------------");
     }
     
@@ -52,10 +53,14 @@ public class TimeLoggerUIv2 {
             case 8:
                 adder.deleteTask();
                 break;
+            case 9:
+                adder.modifyTask();
+                break;
             default:
                 System.out.println("Number \"" + procedure + "\" does not refer to a procedure!");
                 break;
         }
         return true;
     }
+    
 }

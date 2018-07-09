@@ -166,7 +166,25 @@ public class TimeLogAdder {
         }
     }
     
-    
+    public void modifyTask(){
+        if(lister.listTasksForDay(true)){
+            System.out.println("\nEnter the taskId of the task you wish to modify!");
+            String targetId = Util.userInput.nextLine();
+            
+            for(int i=0; i<lister.getChosenDay().getTasks().size(); i++){
+                if (targetId.equals(lister.getChosenDay().getTasks().get(i).getTaskId())){
+                    Task targetTask = lister.getChosenDay().getTasks().get(i);
+                    TaskModUI localUI = new TaskModUI();
+                    boolean next=true;
+                    while(next==true){
+                        localUI.showMenu(targetTask);
+                        next=localUI.execute(Integer.parseInt(Util.userInput.nextLine()));
+                    }
+                }
+                
+            }
+        }
+    }
     
     
 }
