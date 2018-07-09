@@ -19,6 +19,7 @@ public class TimeLoggerUIv2 {
         System.out.println("5. Add a workday to a specific month");
         System.out.println("6. Add a task to a specific day");
         System.out.println("7. Finish a specific task");
+        System.out.println("8. Delete a specific task");
         System.out.println("-----------------------------------------------");
     }
     
@@ -47,6 +48,9 @@ public class TimeLoggerUIv2 {
                 break;
             case 7:
                 adder.finishTask();
+                break;
+            case 8:
+                adder.deleteTask();
                 break;
             default:
                 System.out.println("Number \"" + procedure + "\" does not refer to a procedure!");

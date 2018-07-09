@@ -118,7 +118,7 @@ public class TimeLogAdder {
     public void finishTask(){
             
         if(lister.listTasksForDay(false)){
-            System.out.println("Enter the taskId of the task you wish to end!");
+            System.out.println("\nEnter the taskId of the task you wish to end!");
             String targetId = Util.userInput.nextLine();
             
             for(int i=0; i<lister.getChosenDay().getTasks().size(); i++){
@@ -143,4 +143,30 @@ public class TimeLogAdder {
             return ( (( 0<=hour && hour<=24 ) && ( 0<=min && min<=59 )) && 
                     ( (hour>startH) || ( hour==startH && min < startM ) ) );
         }
+        
+    public void deleteTask(){
+        if(lister.listTasksForDay(true)){
+            System.out.println("\nEnter the taskId of the task you wish to delete!");
+            String targetId = Util.userInput.nextLine();
+            
+            for(int i=0; i<lister.getChosenDay().getTasks().size(); i++){
+                if (targetId.equals(lister.getChosenDay().getTasks().get(i).getTaskId())){
+                    System.out.println("Are you sure about deleting this record? (y/n)");
+                    if(Util.userInput.nextLine().equals("y")){
+                        lister.getChosenDay().getTasks().remove(i);
+                        System.out.println("The item has been removed.");
+                    } else {
+                        System.out.println("The item still exists.");
+                    }
+                    
+                }
+                
+            }
+            
+        }
+    }
+    
+    
+    
+    
 }
