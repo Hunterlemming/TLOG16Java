@@ -133,13 +133,13 @@ public class TimeLoggerUI {
                 } else {
                     if (all==true){
                         for (int i=0; i<chosenDay.getTasks().size(); i++){
-                            System.out.println("TaskId: " + chosenDay.getTasks().get(i).getTaskId() + ", Comment: " + chosenDay.getTasks().get(i).getComment());
+                            System.out.println("\nTaskId: " + chosenDay.getTasks().get(i).getTaskId() + ", Comment: " + chosenDay.getTasks().get(i).getComment());
                             System.out.println("StartTime: " + chosenDay.getTasks().get(i).getStartTime() + ", EndTime: " + chosenDay.getTasks().get(i).getEndTime() +"\n");
                         }
                     } else {
                         for (int i=0; i<chosenDay.getTasks().size(); i++){
                             if (chosenDay.getTasks().get(i).getStartTime()==chosenDay.getTasks().get(i).getEndTime()){
-                                System.out.println("TaskId: " + chosenDay.getTasks().get(i).getTaskId() + ", Comment: " + chosenDay.getTasks().get(i).getComment());
+                                System.out.println("\nTaskId: " + chosenDay.getTasks().get(i).getTaskId() + ", Comment: " + chosenDay.getTasks().get(i).getComment());
                                 System.out.println("StartTime: " + chosenDay.getTasks().get(i).getStartTime() + ", EndTime: " + chosenDay.getTasks().get(i).getEndTime() +"\n");
                             }
                         }
@@ -222,13 +222,13 @@ public class TimeLoggerUI {
                     System.out.println("Please enter the start of the task (hh:mm)! [" + defaultEndTime + "]");
                     String newStartTime=userInput.nextLine();
                     
-                    if (newStartTime.equals("")){
+                    /*if (newStartTime.equals("")){
                         newTask = new Task(newTaskId, newComment, defaultEndTime);
                     } else {
                         newTask = new Task(newTaskId, newComment, newStartTime);
                     }
                     
-                    workLog.getMonths().get(destinationMonthID).getDays().get(destinationDayID).addTask(newTask);
+                    workLog.getMonths().get(destinationMonthID).getDays().get(destinationDayID).addTask(newTask);*/
                 }
                 
             }
@@ -257,20 +257,23 @@ public class TimeLoggerUI {
         private void finishTask(){
             WorkDay wd = listTasksForDay(false);
             
-            System.out.println("Enter the taskId of the task you wish to end!");
-            String targetId = userInput.nextLine();
-            
-            for(int i=0; i<wd.getTasks().size(); i++){
-                if (targetId.equals(wd.getTasks().get(i).getTaskId())){
-                    System.out.println("Please enter the end of the task (hh:mm)!");
-                    String endTime = userInput.nextLine();
-                    while(!validTaskTime(endTime)){
-                        System.out.println("Please enter a valid time field (hh:mm)!");
-                        endTime = userInput.nextLine();
+            if (wd.getRequiredMinPerDay()!=-1){
+                System.out.println("Enter the taskId of the task you wish to end!");
+                String targetId = userInput.nextLine();
+
+                for(int i=0; i<wd.getTasks().size(); i++){
+                    if (targetId.equals(wd.getTasks().get(i).getTaskId())){
+                        System.out.println("Please enter the end of the task (hh:mm)!");
+                        String endTime = userInput.nextLine();
+                        while(!validTaskTime(endTime)){
+                            System.out.println("Please enter a valid time field (hh:mm)!");
+                            endTime = userInput.nextLine();
+                        }
+                        wd.getTasks().get(i).setEndTime(endTime);
                     }
-                    wd.getTasks().get(i).setEndTime(endTime);
                 }
             }
+            
         }
         
             private boolean validTaskTime( String time ){

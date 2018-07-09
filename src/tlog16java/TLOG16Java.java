@@ -1,7 +1,5 @@
 package tlog16java;
 
-    import java.util.Scanner;
-
 public class TLOG16Java {
 
     public static void main(String[] args) {
@@ -9,17 +7,16 @@ public class TLOG16Java {
         application.start();
     }
     
-    private Scanner userInput = new Scanner(System.in);
     private TimeLogger workLog = new TimeLogger();
     
     public void start() {
         System.out.println("Precognox TimeLogger Project");
-        TimeLoggerUI UI = new TimeLoggerUI();
+        TimeLoggerUIv2 UI = new TimeLoggerUIv2();
         
         boolean next = true;
         while (next==true){
             UI.showMenu(workLog);
-            int procedure = Integer.parseInt(userInput.nextLine());
+            int procedure = Integer.parseInt(Util.userInput.nextLine());
             next = UI.execute(procedure);
         }
     }

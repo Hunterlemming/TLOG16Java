@@ -8,7 +8,7 @@ public class WorkDay {
         
 //---- Variables ----
     
-    private List<Task>tasks = new ArrayList<>();
+    private ArrayList<Task>tasks = new ArrayList<>();
     private long requiredMinPerDay=450;
     private LocalDate actualDay=LocalDate.now();
     private long sumPerDay;
@@ -58,7 +58,7 @@ public class WorkDay {
         this.actualDay = LocalDate.of(_year, _month, _day);
     }
     
-    public List<Task> getTasks() {
+    public ArrayList<Task> getTasks() {
         return tasks;
     }
         
@@ -71,6 +71,9 @@ public class WorkDay {
     public void addTask(Task t){
         if( Util.isMultipleQuarterHour(t.getMinPerTask()) && Util.isSeparatedTime(this,t) ){
             getTasks().add(t);
+        } else {
+            if (!Util.isMultipleQuarterHour(t.getMinPerTask())) System.out.println("The tasktime cannot be divided into quarter hours.");
+            if (!Util.isSeparatedTime(this,t)) System.out.println("Two tasktimes collide.");
         }
     }
     

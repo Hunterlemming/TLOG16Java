@@ -1,6 +1,11 @@
 package tlog16java;
 
+import java.util.Scanner;
+import java.util.ArrayList;
+
 public class Util {
+    
+    public static Scanner userInput = new Scanner(System.in);
     
     public static long roundToMultipleQuarterHour(long minPerTask){
         long remainingToQuarter = minPerTask%15;
@@ -27,10 +32,19 @@ public class Util {
     }
     
         private static boolean isInTheIntervall(Task newTask, Task oldTask){
-            return ( ( newTask.getStartTime().compareTo(oldTask.getStartTime())<=0 && oldTask.getEndTime().compareTo(newTask.getEndTime())<=0 ) ||
-                     ( oldTask.getStartTime().compareTo(newTask.getEndTime())<0 && newTask.getEndTime().compareTo(oldTask.getEndTime())<=0 ) ||
-                     ( oldTask.getStartTime().compareTo(newTask.getStartTime())<=0 && newTask.getStartTime().compareTo(oldTask.getEndTime())<0 ) );
+            return ( newTask.getStartTime().compareTo(oldTask.getEndTime())<=0 && newTask.getEndTime().compareTo(oldTask.getStartTime())>=0 );
         }
+        
+    public static int getListElement(ArrayList imputList){
+        int option=Integer.parseInt(userInput.nextLine())-1;
+
+        while ( option>=imputList.size() || option<0 ){
+            System.out.println("Please enter a valid number!");
+            option=Integer.parseInt(userInput.nextLine())-1;
+        }
+            
+        return option;
+    }
         
     public static boolean isWeekDay(WorkDay wd){
         return wd.getActualDay().getDayOfWeek().getValue()<=5;

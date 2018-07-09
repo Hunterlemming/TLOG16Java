@@ -9,7 +9,7 @@ public class WorkMonth {
             
 //---- Variables ----
     
-    private List<WorkDay> days = new ArrayList<>();
+    private ArrayList<WorkDay> days = new ArrayList<>();
     private YearMonth date;
     private long sumPerMonth;
     private long requiredMinPerMonth;
@@ -20,7 +20,7 @@ public class WorkMonth {
         date=YearMonth.of(_year,_month);
     }
     
-    public List<WorkDay> getDays() {
+    public ArrayList<WorkDay> getDays() {
         return days;
     }
     

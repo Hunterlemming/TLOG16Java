@@ -7,11 +7,11 @@ public class TimeLogger {
             
 //---- Variables ----
     
-    private List<WorkMonth> months = new ArrayList<>();
+    private ArrayList<WorkMonth> months = new ArrayList<>();
         
 //---- Getter ----
     
-    public List<WorkMonth> getMonths() {
+    public ArrayList<WorkMonth> getMonths() {
         return months;
     }
         
@@ -20,7 +20,8 @@ public class TimeLogger {
     public boolean isNewMonth(WorkMonth wm){
         boolean isNew=true;
         for (int i=0; i<months.size(); i++){
-            if (wm.equals(months.get(i))){
+            if (wm.getDate().compareTo(months.get(i).getDate()) == 0){
+                System.out.println("This month already exists!");
                 isNew=false;
             }
         }
