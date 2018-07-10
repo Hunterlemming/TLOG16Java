@@ -68,7 +68,7 @@ public class TimeLogLister {
                         }
                     } else {
                         for (int i=0; i<chosenDay.getTasks().size(); i++){
-                            if (chosenDay.getTasks().get(i).getStartTime()==chosenDay.getTasks().get(i).getEndTime()){
+                            if (chosenDay.getTasks().get(i).getStartTime().compareTo(chosenDay.getTasks().get(i).getEndTime())==0){
                                 System.out.println("\nTaskId: " + chosenDay.getTasks().get(i).getTaskId() + ", Comment: " + chosenDay.getTasks().get(i).getComment());
                                 System.out.println("StartTime: " + chosenDay.getTasks().get(i).getStartTime() + ", EndTime: " + chosenDay.getTasks().get(i).getEndTime());
                             }

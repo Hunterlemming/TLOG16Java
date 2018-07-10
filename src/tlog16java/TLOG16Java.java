@@ -16,7 +16,7 @@ public class TLOG16Java {
         boolean next = true;
         while (next==true){
             UI.showMenu(workLog);
-            int procedure = Integer.parseInt(Util.userInput.nextLine());
+            int procedure = Util.nextInt();
             next = UI.execute(procedure);
         }
     }

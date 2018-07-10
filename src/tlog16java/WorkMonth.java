@@ -1,6 +1,5 @@
 package tlog16java;
 
-import java.util.List;
 import java.time.YearMonth;
 import java.util.ArrayList;
 

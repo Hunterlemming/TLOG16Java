@@ -24,14 +24,14 @@ public class TimeLogAdder {
         boolean valid=false;
         while(valid==false){
             System.out.println("Please specify the year!");
-            year=Integer.parseInt(Util.userInput.nextLine());
+            year=Util.nextInt();
             if (1900<=year) valid=true;
         }
             
         valid=false;
         while(valid==false){
             System.out.println("Please specify the month!");
-            month=Integer.parseInt(Util.userInput.nextLine());
+            month=Util.nextInt();
             if ( 1<=month && month<=12 ) valid=true;
         }
             
@@ -50,7 +50,7 @@ public class TimeLogAdder {
 
             do{
                 System.out.println("Which day of the month should the workday be on?");
-                destinationDay=Integer.parseInt(Util.userInput.nextLine());
+                destinationDay=Util.nextInt();
             }while(Util.validDate(destinationYear, destinationMonth, destinationDay)==false);
             
             System.out.println("What is the required worktime for the day (minutes) ? (write \"d\" for default (7.5 hours)");
@@ -60,7 +60,15 @@ public class TimeLogAdder {
                 newDay = new WorkDay(destinationYear,destinationMonth,destinationDay);
             } else {
                 long workTimeInMinutes=Long.parseLong(workTime);
-                newDay = new WorkDay(workTimeInMinutes,destinationYear,destinationMonth,destinationDay);
+                if (workTimeInMinutes <= 1440) {
+                    newDay = new WorkDay(workTimeInMinutes,destinationYear,destinationMonth,destinationDay);
+                } else {
+                    while (workTimeInMinutes > 1440){
+                        System.out.println("We are sorry to inform you, but you cannot work more than 24 hours a day.\nPlease enter another worktime!");
+                        workTimeInMinutes=Long.parseLong(Util.userInput.nextLine());
+                    }
+                    newDay = new WorkDay(workTimeInMinutes,destinationYear,destinationMonth,destinationDay);
+                }
             }
             workLog.getMonths().get(destinationMonthID).addWorkDay(newDay);
         }
@@ -87,7 +95,15 @@ public class TimeLogAdder {
             if (newStartTime.equals("")){
                 newTask = new Task(newTaskId, newComment, defaultEndTime, defaultEndTime);
             } else {
-                newTask = new Task(newTaskId, newComment, newStartTime, newStartTime);
+                if (Util.validTaskTime(0, 0, newStartTime)){
+                    newTask = new Task(newTaskId, newComment, newStartTime, newStartTime);
+                } else {
+                    while (!Util.validTaskTime(0, 0, newStartTime)){
+                        System.out.println("Please enter a valid time! (hh:mm)");
+                        newStartTime=Util.userInput.nextLine();
+                    }
+                    newTask = new Task(newTaskId, newComment, newStartTime, newStartTime);
+                }
             }
             
             destinationDay.addTask(newTask);
@@ -127,7 +143,7 @@ public class TimeLogAdder {
                     String endTime = Util.userInput.nextLine();
                     int startTimeH = lister.getChosenDay().getTasks().get(i).getStartTime().getHour();
                     int startTimeM = lister.getChosenDay().getTasks().get(i).getStartTime().getMinute();
-                    while(!validTaskTime(startTimeH, startTimeM, endTime)){
+                    while(!Util.validTaskTime(startTimeH, startTimeM, endTime)){
                         System.out.println("Please enter a valid time field (hh:mm)!");
                         endTime = Util.userInput.nextLine();
                     }
@@ -136,13 +152,6 @@ public class TimeLogAdder {
             }
         }
     }
-        
-        private boolean validTaskTime( int startH, int startM, String time ){
-            int hour = Integer.parseInt(time.split(":")[0]), 
-                min = Integer.parseInt(time.split(":")[1]);
-            return ( (( 0<=hour && hour<=24 ) && ( 0<=min && min<=59 )) && 
-                    ( (hour>startH) || ( hour==startH && min < startM ) ) );
-        }
         
     public void deleteTask(){
         if(lister.listTasksForDay(true)){
@@ -178,7 +187,7 @@ public class TimeLogAdder {
                     boolean next=true;
                     while(next==true){
                         localUI.showMenu(targetTask);
-                        next=localUI.execute(Integer.parseInt(Util.userInput.nextLine()));
+                        next=localUI.execute(Util.nextInt());
                     }
                 }
                 

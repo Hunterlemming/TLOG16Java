@@ -7,6 +7,19 @@ public class Util {
     
     public static Scanner userInput = new Scanner(System.in);
     
+    public static boolean isInt(String text){
+        return text.matches("[0-9]+");
+    }
+    
+    public static int nextInt(){
+        String text = userInput.nextLine();
+        while ( !text.matches("[0-9]+") ) {
+                System.out.println("Please enter a valid value!");
+                text = userInput.nextLine();
+            }
+        return Integer.parseInt(text);
+    }
+    
     public static long roundToMultipleQuarterHour(long minPerTask){
         long remainingToQuarter = minPerTask%15;
         if (remainingToQuarter<=7) {
@@ -36,11 +49,11 @@ public class Util {
         }
         
     public static int getListElement(ArrayList imputList){
-        int option=Integer.parseInt(userInput.nextLine())-1;
+        int option=Util.nextInt()-1;
 
         while ( option>=imputList.size() || option<0 ){
             System.out.println("Please enter a valid number!");
-            option=Integer.parseInt(userInput.nextLine())-1;
+            option=Util.nextInt()-1;
         }
             
         return option;
@@ -77,4 +90,12 @@ public class Util {
         return valid;
     }
     
+    public static boolean validTaskTime( int startH, int startM, String time ){
+        if (!time.contains(":"))  return false;
+        if ( !isInt(time.split(":")[0]) || !isInt(time.split(":")[1]) ) return false; 
+        int hour = Integer.parseInt(time.split(":")[0]), 
+            min = Integer.parseInt(time.split(":")[1]);
+        return ( (( 0<=hour && hour<=24 ) && ( 0<=min && min<=59 )) && 
+               ( (hour>startH) || ( hour==startH && min > startM ) ) );
+    }
 }

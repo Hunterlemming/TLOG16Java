@@ -37,12 +37,12 @@ public class TaskModUI {
                 break;
             case 3:
                 subMenu();
-                option = Integer.parseInt(Util.userInput.nextLine());
+                option = Util.nextInt();;
                 timeExecute(option, 3);
                 break;
             case 4:
                 subMenu();
-                option = Integer.parseInt(Util.userInput.nextLine());
+                option = Util.nextInt();;
                 timeExecute(option, 4);
                 break;
             default:
@@ -77,33 +77,48 @@ public class TaskModUI {
         }
         
         private void modTimeString(int endOrStart){
+            String time;
             switch(endOrStart){
                 case 3:
-                    System.out.println("Please enter the new StartTime!");
-                    task.setStartTime(Util.userInput.nextLine());
+                    do{
+                        System.out.println("Please enter the new StartTime!");
+                        time=Util.userInput.nextLine();
+                        if (!Util.validTaskTime(0, 0, time)) System.out.println("Invalid date!");
+                    } while( !Util.validTaskTime(0, 0, time) );
+                    task.setStartTime(time);
                     break;
                 case 4:
-                    System.out.println("Please enter the new EndTime!");
-                    task.setEndTime(Util.userInput.nextLine());
+                    do{
+                        System.out.println("Please enter the new EndTime!");
+                        time=Util.userInput.nextLine();
+                        if (!Util.validTaskTime(task.getStartTime().getHour(), task.getStartTime().getMinute(), time )) System.out.println("Invalid date!");
+                    } while ( !Util.validTaskTime(task.getStartTime().getHour(), task.getStartTime().getMinute(), time) );
+                    task.setEndTime(time);
                     break;
             }
         }
         
         private void modTimeInts(int endOrStart){
-            int h, m;
+            int h=0, m=0;
             switch(endOrStart){
                 case 3:
-                    System.out.println("Please enter the new starting hour!");
-                    h=Integer.parseInt(Util.userInput.nextLine());
-                    System.out.println("Please enter the new starting minute!");
-                    m=Integer.parseInt(Util.userInput.nextLine());
+                    do{
+                        System.out.println("Please enter the new starting hour!");
+                        h=Util.nextInt();
+                        System.out.println("Please enter the new starting minute!");
+                        m=Util.nextInt();
+                        if (!Util.validTaskTime(0, 0, h + ":" + m)) System.out.println("Invalid date!");
+                    } while( !Util.validTaskTime(0, 0, h + ":" + m) );
                     task.setStartTime(h, m);
                     break;
                 case 4:
-                    System.out.println("Please enter the new ending hour!");
-                    h=Integer.parseInt(Util.userInput.nextLine());
-                    System.out.println("Please enter the new ending minute!");
-                    m=Integer.parseInt(Util.userInput.nextLine());
+                    do{
+                        System.out.println("Please enter the new ending hour!");
+                        h=Util.nextInt();
+                        System.out.println("Please enter the new ending minute!");
+                        m=Util.nextInt();
+                        if (!Util.validTaskTime(task.getStartTime().getHour(), task.getStartTime().getMinute(), h + ":" + m)) System.out.println("Invalid date!");
+                    } while ( !Util.validTaskTime(task.getStartTime().getHour(), task.getStartTime().getMinute(), h + ":" + m) );
                     task.setEndTime(h, m);
                     break;
             }
