@@ -69,12 +69,7 @@ public class WorkDay {
     }
         
     public void addTask(Task t){
-        if( Util.isMultipleQuarterHour(t.getMinPerTask()) && Util.isSeparatedTime(this,t) ){
-            getTasks().add(t);
-        } else {
-            if (!Util.isMultipleQuarterHour(t.getMinPerTask())) System.out.println("The tasktime cannot be divided into quarter hours.");
-            if (!Util.isSeparatedTime(this,t)) System.out.println("Two tasktimes collide.");
-        }
+        getTasks().add(t);
     }
     
 }

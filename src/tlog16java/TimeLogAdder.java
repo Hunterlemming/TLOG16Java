@@ -106,7 +106,8 @@ public class TimeLogAdder {
                 }
             }
             
-            destinationDay.addTask(newTask);
+            if (Util.validTask(destinationDay, newTask)) destinationDay.addTask(newTask);
+            
         }
         
     }
@@ -134,8 +135,10 @@ public class TimeLogAdder {
     public void finishTask(){
             
         if(lister.listTasksForDay(false)){
+            Task temp = new Task("temp","","0:0","0:0");
             System.out.println("\nEnter the number of the task you wish to end!");
             int target = Util.getListElement(lister.getChosenDay().getTasks());
+            tempTaskSetter(lister.getChosenDay().getTasks().get(target), temp);
             
             System.out.println("Please enter the end of the task (hh:mm)!");
             String endTime = Util.userInput.nextLine();
@@ -145,10 +148,19 @@ public class TimeLogAdder {
                 System.out.println("Please enter a valid time field (hh:mm)!");
                 endTime = Util.userInput.nextLine();
             }
-            lister.getChosenDay().getTasks().get(target).setEndTime(endTime);
+            
+            temp.setEndTime(endTime);
+            if (Util.validTask(lister.getChosenDay(), temp)) lister.getChosenDay().getTasks().get(target).setEndTime(endTime);  // a util.intervalMerger removeolja és nem tud visszaírni
                 
         }
     }
+    
+        private void tempTaskSetter(Task from, Task into){
+            into.setTaskId(from.getTaskId());
+            into.setComment(from.getComment());
+            into.setEndTime(from.getEndTime().getHour(), from.getEndTime().getMinute());
+            into.setStartTime(from.getStartTime().getHour(), from.getStartTime().getMinute());
+        }
         
     public void deleteTask(){
         if(lister.listTasksForDay(true)){

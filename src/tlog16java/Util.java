@@ -31,14 +31,18 @@ public class Util {
     }
     
     public static boolean isMultipleQuarterHour(long minPerTask){
-        return (minPerTask % 15) == 0;
+        return ((minPerTask % 15) == 0);
     }
     
     public static boolean isSeparatedTime(WorkDay wd, Task t){
         boolean isSeparated=true;
         for (int i=0; i<wd.getTasks().size(); i++){
-            if ( isInTheIntervall(t,wd.getTasks().get(i))==true ){
-                isSeparated=false;
+            if (isInTheIntervall(t,wd.getTasks().get(i))==true){
+                if (t.getTaskId().equals(wd.getTasks().get(i).getTaskId())){
+                    if (intervallMerger(wd.getTasks().get(i), t)) wd.getTasks().remove(i);
+                } else {
+                    isSeparated=false;
+                }
             }
         }
         return isSeparated;
@@ -46,6 +50,25 @@ public class Util {
     
         private static boolean isInTheIntervall(Task newTask, Task oldTask){
             return ( newTask.getStartTime().compareTo(oldTask.getEndTime())<=0 && newTask.getEndTime().compareTo(oldTask.getStartTime())>=0 );
+        }
+        
+        private static boolean intervallMerger(Task oldt, Task newt){
+            long elapsedTimeInMinutes;
+            if (oldt.getStartTime().compareTo(newt.getStartTime())<=0 && oldt.getEndTime().compareTo(newt.getEndTime())<=0) {
+                elapsedTimeInMinutes = (newt.getEndTime().getHour()-oldt.getStartTime().getHour())*60 + newt.getEndTime().getMinute()-oldt.getStartTime().getMinute();
+                if (isMultipleQuarterHour(elapsedTimeInMinutes)){
+                    newt.setStartTime(oldt.getStartTime().getHour(), oldt.getStartTime().getMinute());
+                    return true;
+                }
+            }
+            if (newt.getStartTime().compareTo(oldt.getStartTime())<=0 && newt.getEndTime().compareTo(oldt.getEndTime())<=0) {
+                elapsedTimeInMinutes = (oldt.getEndTime().getHour()-newt.getStartTime().getHour())*60 + oldt.getEndTime().getMinute()-newt.getStartTime().getMinute();
+                if (isMultipleQuarterHour(elapsedTimeInMinutes)){
+                    newt.setEndTime(oldt.getEndTime().getHour(), oldt.getEndTime().getMinute());
+                    return true;
+                }
+            }
+            return false;
         }
         
     public static int getListElement(ArrayList imputList){
@@ -98,4 +121,16 @@ public class Util {
         return ( (( 0<=hour && hour<=23 ) && ( 0<=min && min<=59 )) && 
                ( (hour>startH) || ( hour==startH && min > startM ) ) );
     }
+    
+    public static boolean validTask(WorkDay targetDay, Task newTask){
+        if( isMultipleQuarterHour(newTask.getMinPerTask()) && newTask.isValidTaskId() && isSeparatedTime(targetDay, newTask) ){
+            return true;
+        } else {
+            if (!isMultipleQuarterHour(newTask.getMinPerTask())) System.out.println("The tasktime cannot be divided into quarter hours.");
+            if (!isSeparatedTime(targetDay, newTask)) System.out.println("Two tasktimes collide.");
+            if (!newTask.isValidTaskId()) System.out.println("Invalid ID.");
+            return false;
+        }
+    }
+    
 }
