@@ -15,10 +15,10 @@ public class Task {
 //---- Constructors, Getters, Setters ----
     
     public Task(String _taskId, String _comment, int startHour, int startMin, int endHour, int endMin){
-        taskId=_taskId;
-        startTime=LocalTime.of(startHour, startMin);
-        endTime=LocalTime.of(endHour, endMin);
-        comment=_comment;
+        setTaskId(_taskId);
+        setStartTime(startHour,startMin);
+        setEndTime(endHour, endMin);
+        setComment(_comment);
     }
     
         private void makeMinPerTask(){
@@ -28,10 +28,10 @@ public class Task {
         }
     
     public Task(String _taskId, String _comment, String _startTime, String _endTime){
-        taskId=_taskId;
-        startTime=LocalTime.of( Integer.parseInt(_startTime.split(":")[0]) , Integer.parseInt(_startTime.split(":")[1]) );
-        endTime=LocalTime.of( Integer.parseInt(_endTime.split(":")[0]) , Integer.parseInt(_endTime.split(":")[1]) );
-        comment=_comment;
+        setTaskId(_taskId);
+        setStartTime(_startTime);
+        setEndTime(_endTime);
+        setComment(_comment);
     }
     
     public Task(String _taskId){
@@ -59,27 +59,27 @@ public class Task {
         return minPerTask;
     }
     
-    public void setTaskId(String taskId) {
+    public final void setTaskId(String taskId) {
         this.taskId = taskId;
     }
     
-    public void setStartTime(int startHour, int startMin) {
+    public final void setStartTime(int startHour, int startMin) {
         this.startTime = LocalTime.of(startHour, startMin);
     }
     
-    public void setStartTime(String _startTime){
+    public final void setStartTime(String _startTime){
         this.startTime=LocalTime.of( Integer.parseInt(_startTime.split(":")[0]) , Integer.parseInt(_startTime.split(":")[1]) );
     }
     
-    public void setEndTime(int endHour, int endMin) {
+    public final void setEndTime(int endHour, int endMin) {
         this.endTime = LocalTime.of(endHour, endMin);
     }
     
-    public void setEndTime(String _endTime) {
+    public final void setEndTime(String _endTime) {
         this.endTime = LocalTime.of( Integer.parseInt(_endTime.split(":")[0]) , Integer.parseInt(_endTime.split(":")[1]) );
     }
     
-    public void setComment(String comment) {
+    public final void setComment(String comment) {
         this.comment = comment;
     }
     
