@@ -39,11 +39,12 @@ public class WorkDay {
     }
     
     public long getSumPerDay() {
-        setSumPerDay();
+        makeSumPerDay();
         return sumPerDay;
     }
     
-        private void setSumPerDay(){
+        private void makeSumPerDay(){
+            sumPerDay=0;
             for (int i=0; i<tasks.size(); i++){
                 sumPerDay=sumPerDay+tasks.get(i).getMinPerTask();
             }

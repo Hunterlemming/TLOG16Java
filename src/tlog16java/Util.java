@@ -95,7 +95,7 @@ public class Util {
         if ( !isInt(time.split(":")[0]) || !isInt(time.split(":")[1]) ) return false; 
         int hour = Integer.parseInt(time.split(":")[0]), 
             min = Integer.parseInt(time.split(":")[1]);
-        return ( (( 0<=hour && hour<=24 ) && ( 0<=min && min<=59 )) && 
+        return ( (( 0<=hour && hour<=23 ) && ( 0<=min && min<=59 )) && 
                ( (hour>startH) || ( hour==startH && min > startM ) ) );
     }
 }

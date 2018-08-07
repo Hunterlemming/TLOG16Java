@@ -63,13 +63,13 @@ public class TimeLogLister {
                 if(!chosenDay.getTasks().isEmpty()){
                     if (printall==true){
                         for(int i=0; i<chosenDay.getTasks().size(); i++){
-                            System.out.println("\nTaskId: " + chosenDay.getTasks().get(i).getTaskId() + ", Comment: " + chosenDay.getTasks().get(i).getComment());
+                            System.out.println("\n" + (i+1) + " TaskId: " + chosenDay.getTasks().get(i).getTaskId() + ", Comment: " + chosenDay.getTasks().get(i).getComment());
                             System.out.println("StartTime: " + chosenDay.getTasks().get(i).getStartTime() + ", EndTime: " + chosenDay.getTasks().get(i).getEndTime());
                         }
                     } else {
                         for (int i=0; i<chosenDay.getTasks().size(); i++){
                             if (chosenDay.getTasks().get(i).getStartTime().compareTo(chosenDay.getTasks().get(i).getEndTime())==0){
-                                System.out.println("\nTaskId: " + chosenDay.getTasks().get(i).getTaskId() + ", Comment: " + chosenDay.getTasks().get(i).getComment());
+                                System.out.println("\n" + (i+1) + " TaskId: " + chosenDay.getTasks().get(i).getTaskId() + ", Comment: " + chosenDay.getTasks().get(i).getComment());
                                 System.out.println("StartTime: " + chosenDay.getTasks().get(i).getStartTime() + ", EndTime: " + chosenDay.getTasks().get(i).getEndTime());
                             }
                         }
@@ -82,5 +82,30 @@ public class TimeLogLister {
         }
         return false;
     }
+    
+        public void printStatistics(){
+            if (listMonths()==true){
+                System.out.println("Choose a month to list workdays from!");
+                int monthID = Util.getListElement(workLog.getMonths());
+                chosenMonth = workLog.getMonths().get(monthID);
+                System.out.println("Required worktime in this month: " + chosenMonth.getRequiredMinPerMonth() + " minute(s).");
+                System.out.println("Achieved worktime in this month: " + chosenMonth.getSumPerMonth() + " minute(s).");
+                if (chosenMonth.getExtraMinPerMonth()>0) System.out.println("Overtime total: " + chosenMonth.getExtraMinPerMonth() + " minute(s).");
+                
+                if(!chosenMonth.getDays().isEmpty()){
+                    System.out.println("\nWorkdays: ");
+                    for(int i=0; i<chosenMonth.getDays().size(); i++){
+                        WorkDay thisDay = chosenMonth.getDays().get(i);
+                        System.out.println(thisDay.getActualDay());
+                        System.out.println("\tRequired worktime this day: " + thisDay.getRequiredMinPerDay() + " minute(s).");
+                        System.out.println("\tAchieved worktime this day: " + thisDay.getSumPerDay() + " minute(s).");
+                        if (thisDay.getExtraMinPerDay()>0) System.out.println("\tOvertime: " + thisDay.getExtraMinPerDay() + " minute(s).");
+                        System.out.println("\tNumber of tasks for this day: " + thisDay.getTasks().size() + ".");
+                    }
+                } else {
+                    System.out.println("No workdays added yet.");
+                }
+            }
+        }
     
 }

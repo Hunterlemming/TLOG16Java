@@ -21,6 +21,7 @@ public class TimeLoggerUIv2 {
         System.out.println("7. Finish a specific task");
         System.out.println("8. Delete a specific task");
         System.out.println("9. Modify a specific task");
+        System.out.println("10. Print the statistics for a specific month");
         System.out.println("-----------------------------------------------");
     }
     

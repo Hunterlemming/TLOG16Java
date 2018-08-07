@@ -10,7 +10,7 @@ public class Task {
     private LocalTime startTime;
     private LocalTime endTime;
     private String comment;
-    private long minPerTask=0;
+    private long minPerTask;
     
 //---- Constructors, Getters, Setters ----
     
@@ -19,7 +19,6 @@ public class Task {
         startTime=LocalTime.of(startHour, startMin);
         endTime=LocalTime.of(endHour, endMin);
         comment=_comment;
-        makeMinPerTask();
     }
     
         private void makeMinPerTask(){
@@ -33,7 +32,6 @@ public class Task {
         startTime=LocalTime.of( Integer.parseInt(_startTime.split(":")[0]) , Integer.parseInt(_startTime.split(":")[1]) );
         endTime=LocalTime.of( Integer.parseInt(_endTime.split(":")[0]) , Integer.parseInt(_endTime.split(":")[1]) );
         comment=_comment;
-        makeMinPerTask();
     }
     
     public Task(String _taskId){
@@ -57,6 +55,7 @@ public class Task {
     }
     
     public long getMinPerTask() {
+        makeMinPerTask();
         return minPerTask;
     }
     
@@ -66,22 +65,18 @@ public class Task {
     
     public void setStartTime(int startHour, int startMin) {
         this.startTime = LocalTime.of(startHour, startMin);
-        makeMinPerTask();
     }
     
     public void setStartTime(String _startTime){
         this.startTime=LocalTime.of( Integer.parseInt(_startTime.split(":")[0]) , Integer.parseInt(_startTime.split(":")[1]) );
-        makeMinPerTask();
     }
     
     public void setEndTime(int endHour, int endMin) {
         this.endTime = LocalTime.of(endHour, endMin);
-        makeMinPerTask();
     }
     
     public void setEndTime(String _endTime) {
         this.endTime = LocalTime.of( Integer.parseInt(_endTime.split(":")[0]) , Integer.parseInt(_endTime.split(":")[1]) );
-        makeMinPerTask();
     }
     
     public void setComment(String comment) {
@@ -99,7 +94,7 @@ public class Task {
     }
     
         private boolean isValidLTTaskId(){
-            return taskId.length()==7 && taskId.split("-")[0].equals("LT");
+            return taskId.length()==7 && taskId.contains("-") && taskId.split("-")[0].equals("LT");
         }
         
         private boolean isValidRedmineTaskId(){

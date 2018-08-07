@@ -134,42 +134,33 @@ public class TimeLogAdder {
     public void finishTask(){
             
         if(lister.listTasksForDay(false)){
-            System.out.println("\nEnter the taskId of the task you wish to end!");
-            String targetId = Util.userInput.nextLine();
+            System.out.println("\nEnter the number of the task you wish to end!");
+            int target = Util.getListElement(lister.getChosenDay().getTasks());
             
-            for(int i=0; i<lister.getChosenDay().getTasks().size(); i++){
-                if (targetId.equals(lister.getChosenDay().getTasks().get(i).getTaskId())){
-                    System.out.println("Please enter the end of the task (hh:mm)!");
-                    String endTime = Util.userInput.nextLine();
-                    int startTimeH = lister.getChosenDay().getTasks().get(i).getStartTime().getHour();
-                    int startTimeM = lister.getChosenDay().getTasks().get(i).getStartTime().getMinute();
-                    while(!Util.validTaskTime(startTimeH, startTimeM, endTime)){
-                        System.out.println("Please enter a valid time field (hh:mm)!");
-                        endTime = Util.userInput.nextLine();
-                    }
-                    lister.getChosenDay().getTasks().get(i).setEndTime(endTime);
-                }
+            System.out.println("Please enter the end of the task (hh:mm)!");
+            String endTime = Util.userInput.nextLine();
+            int startTimeH = lister.getChosenDay().getTasks().get(target).getStartTime().getHour();
+            int startTimeM = lister.getChosenDay().getTasks().get(target).getStartTime().getMinute();
+            while(!Util.validTaskTime(startTimeH, startTimeM, endTime)){
+                System.out.println("Please enter a valid time field (hh:mm)!");
+                endTime = Util.userInput.nextLine();
             }
+            lister.getChosenDay().getTasks().get(target).setEndTime(endTime);
+                
         }
     }
         
     public void deleteTask(){
         if(lister.listTasksForDay(true)){
-            System.out.println("\nEnter the taskId of the task you wish to delete!");
-            String targetId = Util.userInput.nextLine();
+            System.out.println("\nEnter the number of the task you wish to delete!");
+            int target = Util.getListElement(lister.getChosenDay().getTasks());
             
-            for(int i=0; i<lister.getChosenDay().getTasks().size(); i++){
-                if (targetId.equals(lister.getChosenDay().getTasks().get(i).getTaskId())){
-                    System.out.println("Are you sure about deleting this record? (y/n)");
-                    if(Util.userInput.nextLine().equals("y")){
-                        lister.getChosenDay().getTasks().remove(i);
-                        System.out.println("The item has been removed.");
-                    } else {
-                        System.out.println("The item still exists.");
-                    }
-                    
-                }
-                
+            System.out.println("Are you sure about deleting this record? (y/n)");
+            if(Util.userInput.nextLine().equals("y")){
+                lister.getChosenDay().getTasks().remove(target);
+                System.out.println("The item has been removed.");
+            } else {
+                System.out.println("The item still exists.");
             }
             
         }
@@ -177,21 +168,17 @@ public class TimeLogAdder {
     
     public void modifyTask(){
         if(lister.listTasksForDay(true)){
-            System.out.println("\nEnter the taskId of the task you wish to modify!");
-            String targetId = Util.userInput.nextLine();
+            System.out.println("\nEnter the number of the task you wish to modify!");
+            int target = Util.getListElement(lister.getChosenDay().getTasks());
             
-            for(int i=0; i<lister.getChosenDay().getTasks().size(); i++){
-                if (targetId.equals(lister.getChosenDay().getTasks().get(i).getTaskId())){
-                    Task targetTask = lister.getChosenDay().getTasks().get(i);
-                    TaskModUI localUI = new TaskModUI();
-                    boolean next=true;
-                    while(next==true){
-                        localUI.showMenu(targetTask);
-                        next=localUI.execute(Util.nextInt());
-                    }
-                }
-                
+            Task targetTask = lister.getChosenDay().getTasks().get(target);
+            TaskModUI localUI = new TaskModUI();
+            boolean next=true;
+            while(next==true){
+                localUI.showMenu(targetTask);
+                next=localUI.execute(Util.nextInt());
             }
+                
         }
     }
     
