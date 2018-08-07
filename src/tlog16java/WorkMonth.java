@@ -28,6 +28,7 @@ public class WorkMonth {
     }
     
     public long getSumPerMonth() {
+        setSumPerMonth();
         return sumPerMonth;
     }
     

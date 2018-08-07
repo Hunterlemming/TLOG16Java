@@ -57,6 +57,9 @@ public class TimeLoggerUIv2 {
             case 9:
                 adder.modifyTask();
                 break;
+            case 10:
+                lister.printStatistics();
+                break;
             default:
                 System.out.println("Number \"" + procedure + "\" does not refer to a procedure!");
                 break;
